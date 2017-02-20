@@ -26,8 +26,26 @@ class SendMailWrapper extends PHPMailerWrapper
             $messageParts['header'] .= 'Bcc: ' . $bccEmail . "\n";
         }
 
-        mail($envelope->getTo(), $envelope->getSubject(), $messageParts['body'], $messageParts['header']);
+        mail(
+            $this->prepareTo($envelope->getTo()),
+            $envelope->getSubject(),
+            $messageParts['body'],
+            $messageParts['header']
+        );
 
         return true;
+    }
+
+    private function prepareTo($emailTo)
+    {
+        if (is_array($emailTo)) {
+            $strAux = '';
+            foreach ($emailTo as $email) {
+                $strAux .= $email['email'] . ", ";
+            }
+            return substr($strAux, 0, -2);
+        }
+
+        return $emailTo;
     }
 }

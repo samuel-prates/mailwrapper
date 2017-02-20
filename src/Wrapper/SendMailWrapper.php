@@ -41,7 +41,7 @@ class SendMailWrapper extends PHPMailerWrapper
         if (is_array($emailTo)) {
             $strAux = '';
             foreach ($emailTo as $email) {
-                $strAux .= $email['email'] . ", ";
+                $strAux .= $email . ", ";
             }
             return substr($strAux, 0, -2);
         }
